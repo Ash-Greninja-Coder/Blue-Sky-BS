@@ -1,18 +1,24 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class Book {
-  final String image, title, description;
-  final int price, size, id;
-  final Color color;
+ final String image, title, description;
+ final double price, size;
+ final int id;
+ final Color color;
+ int quantity;
 
-  Book(
-      {required this.image,
-      required this.title,
-      required this.description,
-      required this.price,
-      required this.size,
-      required this.id,
-      required this.color});
+ Book({
+    required this.image,
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.size,
+    required this.id,
+    required this.color,
+    this.quantity = 1, // Default quantity is 1
+ });
 }
 
 List<Book> books = [
@@ -23,7 +29,8 @@ List<Book> books = [
       size: 12,
       description: dummyText,
       image: "assests/images/Book_1.jpeg",
-      color: const Color(0xFF3D82AE)),
+      color: const Color(0xFF3D82AE),
+      quantity: 1),
   Book(
       id: 2,
       title: "Book 2",
@@ -31,7 +38,8 @@ List<Book> books = [
       size: 8,
       description: dummyText,
       image: "assests/images/Book_2.jpeg",
-      color:const Color(0xFFD3A984)),
+      color:const Color(0xFFD3A984),
+      quantity: 1),
   Book(
       id: 3,
       title: "Book 3",
@@ -39,7 +47,8 @@ List<Book> books = [
       size: 10,
       description: dummyText,
       image: "assests/images/Book_3.jpeg",
-      color:const Color(0xFF989493)),
+      color:const Color(0xFF989493),
+      quantity: 1),
  Book(
       id: 4,
       title: "Book 4",
@@ -47,7 +56,8 @@ List<Book> books = [
       size: 11,
       description: dummyText,
       image: "assests/images/Book_4.jpeg",
-      color:const Color(0xFFE6B398)),
+      color:const Color(0xFFE6B398),
+      quantity: 1),
   Book(
       id: 5,
       title: "Book 5",
@@ -55,7 +65,8 @@ List<Book> books = [
       size: 12,
       description: dummyText,
       image: "assests/images/Book_5.jpeg",
-      color: const Color(0xFFFB7883)),
+      color: const Color(0xFFFB7883),
+      quantity: 1),
   Book(
     id: 6,
     title: "Book 6",
@@ -64,6 +75,7 @@ List<Book> books = [
     description: dummyText,
     image: "assests/images/Book_6.jpeg",
     color: const Color(0xFFAEAEAE),
+    quantity: 1
   ),
   Book(
       id: 1,
@@ -72,7 +84,8 @@ List<Book> books = [
       size: 12,
       description: "Best Books for CS Student.",
       image: "assests/images/Book_7.jpeg",
-      color: const Color(0xFF3D82AE)),
+      color: const Color(0xFF3D82AE),
+      quantity: 1),
   Book(
       id: 2,
       title: "Book 8",
@@ -80,7 +93,8 @@ List<Book> books = [
       size: 8,
       description: dummyText,
       image: "assests/images/Book_8.jpeg",
-      color:const Color(0xFFD3A984)),
+      color:const Color(0xFFD3A984),
+      quantity: 1),
   Book(
       id: 3,
       title: "Book 9",
@@ -88,7 +102,8 @@ List<Book> books = [
       size: 10,
       description: dummyText,
       image: "assests/images/Book_9.jpeg",
-      color:const Color(0xFF989493)),
+      color:const Color(0xFF989493),
+      quantity: 1),
  Book(
       id: 4,
       title: "Book 10",
@@ -96,7 +111,8 @@ List<Book> books = [
       size: 11,
       description: dummyText,
       image: "assests/images/Book_10.jpeg",
-      color:const Color(0xFFE6B398)),
+      color:const Color(0xFFE6B398),
+      quantity: 1),
   Book(
       id: 5,
       title: "Book 11",
@@ -104,7 +120,8 @@ List<Book> books = [
       size: 12,
       description: dummyText,
       image: "assests/images/Book_11.jpeg",
-      color: const Color(0xFFFB7883)),
+      color: const Color(0xFFFB7883),
+      quantity: 1),
   Book(
     id: 6,
     title: "Book 12",
@@ -113,6 +130,7 @@ List<Book> books = [
     description: dummyText,
     image: "assests/images/Book_12.jpeg",
     color: const Color(0xFFAEAEAE),
+    quantity: 1
   ),
 ];
 

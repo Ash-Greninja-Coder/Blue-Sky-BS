@@ -9,7 +9,6 @@ class CartCounter extends StatefulWidget {
 }
 
 class CartCounterState extends State<CartCounter> {
-  int numOfItems = 1;
   @override
   Widget build(BuildContext context) {
     return Row(

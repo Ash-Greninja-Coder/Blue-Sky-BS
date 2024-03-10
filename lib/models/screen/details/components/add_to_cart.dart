@@ -1,3 +1,5 @@
+import 'package:book/models/functions/add.dart';
+import 'package:book/models/screen/details/buy_now.dart';
 import 'package:flutter/material.dart';
 import 'package:book/models/products.dart';
 
@@ -25,12 +27,22 @@ class AddToCart extends StatelessWidget {
             ),
             child: IconButton(
               icon: const Icon(Icons.shopping_cart),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Add(book: product)),
+                );
+              },
             ),
           ),
           Expanded(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BuyNowDetailsPage(book: product)),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 minimumSize:const Size(double.infinity, 48),
                 shape: RoundedRectangleBorder(

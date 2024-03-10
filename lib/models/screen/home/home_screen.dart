@@ -1,33 +1,45 @@
+import 'package:book/models/functions/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:book/models/products.dart';
 import 'package:book/details/details_screen.dart';
 import 'package:book/models/functions/menu.dart';
 import 'package:book/constants.dart';
+import 'package:book/models/screen/home/body.dart';
+import 'package:book/models/functions/cart_manager.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartManager = CartManager();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
-            Navigator.pushNamed(context, '/menu');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>const Menu()), // Assuming Body is the screen you want to navigate to
+            );
           },
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.blue,
         title: Image.asset(
           'assests/images/logo.png',
-          height: MediaQuery.of(context).size.height / 2,
-          width: MediaQuery.of(context).size.width / 4,
+          height: MediaQuery.of(context).size.height / 4,
+          width: MediaQuery.of(context).size.width / 8,
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>const Body()), // Assuming Body is the screen you want to navigate to
+            );
+            },
             icon: const Icon(Icons.search),
           ),
           IconButton(
@@ -36,7 +48,10 @@ class HomeScreen extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/cart');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage(cartManager: cartManager)),
+                );
             },
             icon: const Icon(Icons.shopping_cart),
           ),

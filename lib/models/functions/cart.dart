@@ -1,66 +1,40 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // Ensure this import path is correct
+import 'package:book/models/functions/cart_manager.dart'; // Assuming this is the correct import path for CartManager
 
 class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+ final CartManager cartManager;
 
-  @override
-  CartPageState createState() => CartPageState();
+ const CartPage({super.key, required this.cartManager});
+
+ @override
+ CartPageState createState() => CartPageState();
 }
 
 class CartPageState extends State<CartPage> {
-  final List<CartItem> _cartItems = [];
-
-  @override
-  Widget build(BuildContext context) {
+ @override
+ Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
       ),
-      body: _cartItems.isEmpty
+      body: widget.cartManager.getCartItems().isEmpty
           ? const Center(
               child: Text('Your cart is empty'),
             )
           : ListView.builder(
-              itemCount: _cartItems.length,
+              itemCount: widget.cartManager.getCartItems().length,
               itemBuilder: (context, index) {
-                final item = _cartItems[index];
+                final item = widget.cartManager.getCartItems()[index];
                 return ListTile(
-                  leading: Image.network(item.imageUrl),
-                  title: Text(item.name),
-                  subtitle: Text('Quantity: ${item.quantity}'),
-                  trailing: const Text('INR{item.price * item.quantity}'),
+                 leading: Image.network(item.image),
+                 title: Text(item.title),
+                 subtitle: Text('Quantity: ${item.quantity}'),
+                 trailing: Text('\u{20B9} ${item.price * item.quantity}'),
                 );
               },
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _cartItems.add(
-              CartItem(
-                name: 'Item ${_cartItems.length + 1}',
-                imageUrl: 'https://via.placeholder.com/150',
-                price: 10.99,
-                quantity: 1,
-              ),
-            );
-          });
-        },
-        child: const Icon(Icons.add),
-      ),
     );
-  }
+ }
 }
 
-class CartItem {
-  final String name;
-  final String imageUrl;
-  final double price;
-  final int quantity;
 
-  CartItem({
-    required this.name,
-    required this.imageUrl,
-    required this.price,
-    required this.quantity,
-  });
-}

@@ -1,84 +1,91 @@
 import 'package:flutter/material.dart';
-import 'package:book/constants.dart';
-import 'package:book/models/products.dart';
+import 'package:book/models/products.dart'; // Ensure this import is correct
+import 'package:book/details/details_screen.dart'; // Ensure this import is correct
 
-import 'components/add_to_cart.dart';
-import 'components/color_and_size.dart';
-import 'components/counter_with_fav_icon.dart';
-import 'components/description.dart';
-import 'components/product_title_with_image.dart';
+class Body extends StatefulWidget {
+ const Body({super.key});
 
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key, required this.product});
+ @override
+ BodyState createState() => BodyState();
+}
 
-  final Book product;
+class BodyState extends State<Body> {
+ final TextEditingController _searchController = TextEditingController();
+ List<Book> filteredData = []; // Initialize filteredData as an empty list
 
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+ @override
+ Widget build(BuildContext context) {
     return Scaffold(
-      // each product have a color
-      backgroundColor: product.color,
-      appBar: AppBar(
-        backgroundColor: product.color,
-        elevation: 0,
-        leading: IconButton(
-          icon:const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {},
-          ),
-          const SizedBox(width: kDefaultPaddin / 2)
-        ],
-      ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
           children: <Widget>[
-            SizedBox(
-              height: size.height,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(top: size.height * 0.3),
-                    padding: EdgeInsets.only(
-                      top: size.height * 0.12,
-                      left: kDefaultPaddin,
-                      right: kDefaultPaddin,
+            Container(
+              height: MediaQuery.of(context).size.height / 11,
+              color: const Color(0xff2874F0),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Container(
+                 alignment: Alignment.center,
+                 decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                 ),
+                 child: TextField(
+                    controller: _searchController,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      hintText: 'Search for Products, Brands and More',
+                      hintStyle: TextStyle(color: Colors.grey),
                     ),
-                    // height: 500,
-                    decoration:const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        topRight: Radius.circular(24),
-                      ),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        ColorAndSize(product: product),
-                        const SizedBox(height: kDefaultPaddin / 2),
-                        Description(book: product),
-                        const SizedBox(height: kDefaultPaddin / 2),
-                        const Heart(),
-                        const SizedBox(height: kDefaultPaddin / 2),
-                        AddToCart(product: product)
-                      ],
-                    ),
-                  ),
-                  ProductTitleWithImage(product: product)
-                ],
+                    onChanged: (value) {
+                      setState(() {
+                        if (value.isNotEmpty) {
+                          // Filter books where the first letter of the title matches the first letter of the search query
+                          filteredData = books
+                              .where((element) => element.title.toLowerCase().startsWith(value.toLowerCase()))
+                              .toList();
+                        } else {
+                          // If the search query is empty, reset filteredData to an empty list
+                          filteredData = [];
+                        }
+                      });
+                    },
+                 ),
+                ),
               ),
-            )
+            ),
+            Expanded(
+              child: filteredData.isEmpty
+                 ? const Center(child: Text('No results found'))
+                 : ListView.builder(
+                      itemCount: filteredData.length,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailsScreen(product: filteredData[index]),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Image.asset(
+                              filteredData[index].image, // Assuming 'image' is a property of Book that holds the asset path
+                              width: 50, // Adjust the width as needed
+                              height: 50, // Adjust the height as needed
+                              fit: BoxFit.cover, // Use BoxFit.cover to maintain the aspect ratio of the image
+                            ),
+                            title: Text(filteredData[index].title),
+                            subtitle: Text(filteredData[index].description),
+                          ),
+                        );
+                      },
+                    ),
+            ),
           ],
         ),
       ),
     );
-  }
+ }
 }
